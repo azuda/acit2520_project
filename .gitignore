@@ -1,5 +1,2 @@
 node_modules
-views/.DS_Store
-.DS_Store
-package
-package-lock
+.DS_store

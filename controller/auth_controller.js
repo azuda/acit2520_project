@@ -1,31 +1,33 @@
 let database = require("../database");
+const express = require("express");
 const userModel = require("../models/userModel").userModel;
+const { forwardAuthenticated } = require("../middleware/checkAuth");
+const passport = require("../middleware/passport");
+
+
 
 let authController = {
   login: (req, res) => {
-    res.render("auth/login");
+    forwardAuthenticated
+    res.render("auth/login")
   },
 
   register: (req, res) => {
     res.render("auth/register");
   },
-
+  
   loginSubmit: (req, res) => {
-    // implement login logic
-
-    // const { email, password } = req.body;
-    // const user = userModel.findOne(email);
-    // if (user.password === password) {
-    //   req.session.user = user;
-    //   res.redirect("/reminders");
-    // } else {
-    //   res.redirect("/login");
-    // }
+      // make passport verify user exists using "local" strategy
+      passport.authenticate("local", {
+        successRedirect: "/dashboard",
+        failureRedirect: "/auth/register",
+      })   
+    
+   
   },
 
   registerSubmit: (req, res) => {
     // implement register logic
-
     // const { name, email, password } = req.body;
     // const user = userModel.findOne(email);
     // if (user) {

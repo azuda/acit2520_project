@@ -13,19 +13,24 @@ const localLogin = new LocalStrategy(
   (email, password, done) => {
     const user = userController.getUserByEmailIdAndPassword(email, password);
     return user
-      // ternary true
+    // { id: 1, name: "", email: "", password: "" }
+      // ternary true returns user object
       ? done(null, user)
-      // ternary false
+      // ternary false returns false
       : done(null, false, {
           message: "Your login details are not valid. Please try again",
         });
   }
 );
 
+// called by login function in authRoute.js
+// req session.passport.user - stores user.id in a new session
+// req.user = user object - currently logged in user can be accessed anywhere with request
 passport.serializeUser(function (user, done) {
   done(null, user.id);
 });
 
+// gets the rest of user data using user.id
 passport.deserializeUser(function (id, done) {
   let user = userController.getUserById(id);
   if (user) {
@@ -35,4 +40,18 @@ passport.deserializeUser(function (id, done) {
   }
 });
 
+// export all of passport library with our custom localLogin code
 module.exports = passport.use(localLogin);
+
+
+
+/*
+Server hard drive
+
+Session = {
+  "fdsjfweuhvsblvjka": {  // cookie
+    user
+  }
+}
+
+*/

@@ -46,7 +46,5 @@ findById: (id) => {
 },
 };
 
-module.exports = { auth_data, userModel };
-
 
 module.exports = { Database, auth_data, userModel };

@@ -6,6 +6,7 @@ const session = require("express-session");
 const reminderController = require("./controller/reminder_controller");
 const authController = require("./controller/auth_controller");
 const passport = require("./middleware/passport");
+const { ensureAuthenticated, forwardAuthenticated } = require("./middleware/checkAuth");
 
 app.use(
   session({
@@ -19,10 +20,7 @@ app.use(
     },
   })
 );
-
-
-
-
+app.use(express.json());
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -53,10 +51,10 @@ app.post("/reminder/update/:id", reminderController.update);
 app.post("/reminder/delete/:id", reminderController.delete);
 
 // Fix this to work with passport! The registration does not need to work, you can use the fake database for this.
-app.get("/register", (req, res) => res.render("auth/register"));
-app.get("/login",authController.login);
-app.post("/register", authController.registerSubmit );
+app.get("/login", forwardAuthenticated, authController.login);
+app.get("/register", authController.register);
 app.post("/login", authController.loginSubmit);
+app.post("/register", authController.registerSubmit);
 
 app.listen(3001, function () {
   console.log(

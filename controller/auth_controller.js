@@ -1,14 +1,10 @@
 let database = require("../database");
-const express = require("express");
-const userModel = require("../models/userModel").userModel;
-const { forwardAuthenticated } = require("../middleware/checkAuth");
 const passport = require("../middleware/passport");
-
+const userController = require("../controller/userController");
 
 
 let authController = {
   login: (req, res) => {
-    forwardAuthenticated
     res.render("auth/login")
   },
 
@@ -17,31 +13,36 @@ let authController = {
   },
   
   loginSubmit: (req, res) => {
-      // make passport verify user exists using "local" strategy
-      passport.authenticate("local", {
-        successRedirect: "/dashboard",
-        failureRedirect: "/auth/register",
-      })   
-    
-   
+    // implement login logic
+    let email = req.body.email;
+    let password = req.body.password;
+    let user = userController.getUserByEmailIdAndPassword(email, password);
+    if (user) {
+      req.session.user = user;
+      res.redirect("/reminders");
+    } else {
+      res.redirect("/login");
+    }
+
+    // passport.authenticate("local", {
+    //   successRedirect: "/reminders",
+    //   failureRedirect: "/login",
+    // })
   },
 
   registerSubmit: (req, res) => {
-    // implement register logic
-    // const { name, email, password } = req.body;
-    // const user = userModel.findOne(email);
-    // if (user) {
-    //   res.redirect("/register");
+    // implement
+    
+    // if (userController.getUserByEmailIdAndPassword(email, password)) {
+    //   res.post("/register");
+    //   throw new Error(`User with email ${email} already exists`);
     // } else {
-    //   const newUser = {
-    //     id: database.length + 1,
-    //     name,
-    //     email,
-    //     password,
+    //   userModel.database[email] = {
+    //     id: Object.keys(userModel.database).length + 1,
+    //     email: email,
+    //     password: password,
     //   };
-    //   database.push(newUser);
-    //   req.session.user = newUser;
-    //   res.redirect("/reminders");
+    //   res.redirect("/login");
     // }
   },
 };

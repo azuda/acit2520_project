@@ -1,5 +1,4 @@
-const database = require("../models/userModel").database;
-const userModel = require("../models/userModel").userModel;
+const userModel = require("../database.js").userModel;
 
 const getUserByEmailIdAndPassword = (email, password) => {
   let user = userModel.findOne(email);
@@ -18,7 +17,6 @@ const getUserById = (id) => {
   return null;
 };
 
-// check if password is correct
 function isUserValid(user, password) {
   return user.password === password;
 }

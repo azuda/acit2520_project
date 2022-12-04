@@ -3,12 +3,16 @@ module.exports = {
     if (req.isAuthenticated()) {
       return next();
     }
-    res.redirect("/auth/login");
+    console.log("You are not logged in");
+    res.redirect("/login");
   },
+  
+
   forwardAuthenticated: function (req, res, next) {
     if (!req.isAuthenticated()) {
       return next();
     }
-    res.redirect("/dashboard");
+    console.log("You are already logged in");
+    res.redirect("/reminders");
   },
 };

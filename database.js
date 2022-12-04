@@ -30,20 +30,20 @@ const auth_data = [
 ];
 
 const userModel = {
-findOne: (email) => {
-    const user = auth_data.find((user) => user.email === email);
-    if (user) {
-    return user;
-    }
-    throw new Error(`Couldn't find user with email: ${email}`);
-},
-findById: (id) => {
-    const user = auth_data.find((user) => user.id === id);
-    if (user) {
-    return user;
-    }
-    throw new Error(`Couldn't find user with id: ${id}`);
-},
+    findOne: (email) => {
+        const user = auth_data.find((user) => user.email === email);
+        if (user) {
+        return user;
+        }
+        throw new Error(`Couldn't find user with email: ${email}`);
+    },
+    findById: (id) => {
+        const user = auth_data.find((user) => user.id === id);
+        if (user) {
+        return user;
+        }
+        throw new Error(`Couldn't find user with id: ${id}`);
+    },
 };
 
 

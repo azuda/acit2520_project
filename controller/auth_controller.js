@@ -14,20 +14,20 @@ let authController = {
   
   loginSubmit: (req, res) => {
     // implement login logic
-    let email = req.body.email;
-    let password = req.body.password;
-    let user = userController.getUserByEmailIdAndPassword(email, password);
-    if (user) {
-      req.session.user = user;
-      res.redirect("/reminders");
-    } else {
-      res.redirect("/login");
-    }
+    // let email = req.body.email;
+    // let password = req.body.password;
+    // let user = userController.getUserByEmailIdAndPassword(email, password);
+    // if (user) {
+    //   req.session.user = user;
+    //   res.redirect("/reminders");
+    // } else {
+    //   res.redirect("/login");
+    // }
 
-    // passport.authenticate("local", {
-    //   successRedirect: "/reminders",
-    //   failureRedirect: "/login",
-    // })
+    passport.authenticate("local", {
+      successRedirect: "/reminders",
+      failureRedirect: "/login",
+    })
   },
 
   registerSubmit: (req, res) => {

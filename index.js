@@ -7,6 +7,7 @@ const reminderController = require("./controller/reminder_controller");
 const authController = require("./controller/auth_controller");
 const passport = require("./middleware/passport");
 const { ensureAuthenticated, forwardAuthenticated } = require("./middleware/checkAuth");
+const authRoute = require("./routes/authRoute");
 
 app.use(
   session({
@@ -32,6 +33,8 @@ app.use(ejsLayouts);
 
 app.set("view engine", "ejs");
 
+app.use("/login", authRoute);
+
 // Routes start here
 
 app.get("/reminders", reminderController.list);
@@ -51,10 +54,10 @@ app.post("/reminder/update/:id", reminderController.update);
 app.post("/reminder/delete/:id", reminderController.delete);
 
 // Fix this to work with passport! The registration does not need to work, you can use the fake database for this.
-app.get("/login", forwardAuthenticated, authController.login);
 app.get("/register", authController.register);
-app.post("/login", authController.loginSubmit);
 app.post("/register", authController.registerSubmit);
+app.get("/login", authController.login);
+app.post("/login", authController.loginSubmit);
 
 app.listen(3001, function () {
   console.log(

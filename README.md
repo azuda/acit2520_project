@@ -1,8 +1,7 @@
 # ACIT 2520 Project
 
-*Jacky Hsu*
+*Jacky Hsu - A00894331*
 
-*Eddie Wang*
+*Eddie Wang - A01314144*
 
-*Aaron Zhang*
-
+*Aaron Zhang - A01316218*
